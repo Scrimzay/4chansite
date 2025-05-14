@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>4chan Catalog Search</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>4chan Catalog Search</h1>
+        {{if .Error}}
+            <p class="error">{{.Error}}</p>
+        {{end}}
+        <form method="POST" action="/catalog/search">
+            <label for="id">Board ID (e.g., b, g):</label>
+            <input type="text" id="id" name="id" required>
+            <button type="submit">Search</button>
+        </form>
+        <a href="/"><button>Back to Home Page</button></a>
+    </div>
+</body>
+</html>

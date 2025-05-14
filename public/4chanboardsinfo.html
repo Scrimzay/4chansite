@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4chan Boards Information</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        {{if .Error}}
+            <h1>Error</h1>
+            <p class="error">{{.Error}}</p>
+            <a href="/" class="back-link">Back to Home</a>
+        {{else}}
+            {{if .Boards}}
+                <h1>4chan Boards Information</h1>
+                <a href="/" class="back-link">Back to Home</a>
+                {{range .Boards}}
+                    <div class="board">
+                        <h2>{{.Title}}</h2>
+                        <p><strong>Board:</strong> /{{.Board}}/</p>
+                        <p><strong>Max Filesize:</strong> {{.MaxFilesize}} bytes</p>
+                        <p><strong>Max WebM Filesize:</strong> {{.MaxWebmFilesize}} bytes</p>
+                        <p><strong>Bump Limit:</strong> {{.BumpLimit}} posts</p>
+                        <p><strong>Image Limit:</strong> {{.ImageLimit}} images</p>
+                        <p><strong>Description:</strong> {{.Description}}</p>
+                    </div>
+                {{end}}
+                <a href="/" class="back-link">Back to Home</a>
+            {{else}}
+                <h1>No Data</h1>
+                <p class="error">No boards data available.</p>
+                <a href="/" class="back-link">Back to Home</a>
+            {{end}}
+        {{end}}
+    </div>
+</body>
+</html>

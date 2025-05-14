@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ .BoardID }} Catalog</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        {{if .Error}}
+            <h1>Error</h1>
+            <p class="error">{{.Error}}</p>
+            <a href="/catalog" class="back-link">Back to Catalog</a>
+        {{else}}
+            {{if .Threads}}
+                <h1>/{{ .BoardID }}/ Catalog - Page {{ .Page }} of {{ .TotalPages }}</h1>
+                <a href="/catalog" class="back-link">Back to Catalog</a>
+                
+                <!-- Pagination controls -->
+                <div class="pagination">
+                    {{if gt .Page 1}}
+                        <a href="/catalog/{{.BoardID}}/info?page={{sub .Page 1}}" class="nav-button">← Previous</a>
+                    {{end}}
+                    
+                    {{range $i := seq .TotalPages}}
+                        <a href="/catalog/{{$.BoardID}}/info?page={{$i}}" 
+                        class="{{if eq $i $.Page}}current-page{{else}}page-link{{end}}">
+                            {{$i}}
+                        </a>
+                    {{end}}
+                    
+                    {{if lt .Page .TotalPages}}
+                        <a href="/catalog/{{.BoardID}}/info?page={{add .Page 1}}" class="nav-button">Next →</a>
+                    {{end}}
+                </div>
+                
+                {{range .Threads}}
+                    <div class="thread">
+                        <p><strong>Thread ID:</strong> {{.No}}</p>
+                        <p><strong>Posted:</strong> {{.Now}}</p>
+                        <p><strong>Name:</strong> {{.Name}}</p>
+                        {{if .Sub}}
+                            <p><strong>Subject:</strong> {{.Sub}}</p>
+                        {{end}}
+                        {{if .Com}}
+                            <p><strong>Comment:</strong> {{.Com}}</p>
+                        {{end}}
+                        {{if .SemanticURL}}
+                            <p><strong>URL Slug:</strong> {{.SemanticURL}}</p>
+                        {{end}}
+                        <p><strong>Replies:</strong> {{.Replies}}</p>
+                        <p><strong>Images:</strong> {{.Images}}</p>
+                        <p><strong>Omitted Posts:</strong> {{.OmittedPosts}}</p>
+                        <p><strong>Omitted Images:</strong> {{.OmittedImages}}</p>
+                        <p><strong>Last Modified:</strong> {{.LastModified}}</p>
+                    </div>
+                {{end}}
+                
+                <!-- Pagination controls at bottom -->
+                <div class="pagination">
+                    {{if gt .Page 1}}
+                        <a href="/catalog/{{.BoardID}}/info?page={{sub .Page 1}}" class="nav-button">← Previous</a>
+                    {{end}}
+                    
+                    {{range $i := seq 1 .TotalPages}}
+                        <a href="/catalog/{{$.BoardID}}/info?page={{$i}}" 
+                           class="{{if eq $i $.Page}}current-page{{else}}page-link{{end}}">
+                            {{$i}}
+                        </a>
+                    {{end}}
+                    
+                    {{if lt .Page .TotalPages}}
+                        <a href="/catalog/{{.BoardID}}/info?page={{add .Page 1}}" class="nav-button">Next →</a>
+                    {{end}}
+                </div>
+                
+                <a href="/catalog" class="back-link">Back to Catalog</a>
+            {{else}}
+                <h1>No Data</h1>
+                <p class="error">No threads available for /{{ .BoardID }}/.</p>
+            {{end}}
+        {{end}}
+    </div>
+</body>
+</html>
